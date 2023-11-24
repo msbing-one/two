@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Random Number and Link in Frame</title>
+
+    <style>
+        /* Your styles remain unchanged */
+    </style>
+</head>
+<body>
+
+<!-- Toggle button for mode -->
+<button id="modeToggleButton" onclick="toggleMode()">Switch Mode</button>
+
+<!-- Toggle button -->
+<button id="toggleButton" onclick="toggleReloading()">Stop</button>
+
+<!-- Frame for displaying content -->
+<div class="frame-container">
+    <iframe id="myFrame1" class="frame" width="100%" height="500"></iframe>
+    <iframe id="myFrame2" class="frame" width="100%" height="500"></iframe>
+</div>
+
+<script>
+    var isReloading = true;
+    var reloadInterval;
+    var isMobileMode = false;
+
+    function toggleReloading() {
+        isReloading = !isReloading;
+        document.getElementById('toggleButton').innerHTML = isReloading ? 'Stop' : 'Start';
+
+        if (isReloading) {
+            reloadFrame();
+            reloadInterval = setInterval(reloadFrame, 1500);
+        } else {
+            clearInterval(reloadInterval);
+        }
+    }
+
+    function toggleMode() {
+        isMobileMode = !isMobileMode;
+        document.getElementById('modeToggleButton').innerHTML = isMobileMode ? 'Switch to Desktop' : 'Switch to Mobile';
+
+        updateModeStyles();
+    }
+
+    function updateModeStyles() {
+        var frameContainer = document.querySelector('.frame-container');
+        var frames = document.querySelectorAll('.frame');
+
+        if (isMobileMode) {
+            frameContainer.style.flexDirection = 'column';
+
+            frames.forEach(function (frame) {
+                frame.style.width = '100%';
+                frame.style.height = '200px';
+            });
+        } else {
+            // Reset to desktop styles
+            frameContainer.style.flexDirection = 'row';
+
+            frames.forEach(function (frame) {
+                frame.style.width = '48%';
+                frame.style.height = '600px';
+            });
+        }
+    }
+
+    function generateRandomNumber() {
+        return Math.floor(Math.random() * 100000) + 1;
+    }
+
+    function reloadFrame() {
+        var random_number = generateRandomNumber();
+        console.log("Random Number:", random_number);
+        document.getElementById('myFrame1').src = 'https://abhishekkumar25122512.github.io/Abhishek-final-script/';
+        document.getElementById('myFrame2').src = 'https://example.com'; // Replace with your desired URL
+    }
+
+    // Call initially to set the default mode
+    updateModeStyles();
+    // Start reloading on page load
+    if (isReloading) {
+        reloadInterval = setInterval(reloadFrame, 5000);
+    }
+</script>
+
+</body>
+</html>
